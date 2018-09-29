@@ -3,6 +3,7 @@ import re
 import tweepy 
 from tweepy import OAuthHandler 
 from textblob import TextBlob
+import googlemaps
 
 class TwitterClient:
 
@@ -10,7 +11,9 @@ class TwitterClient:
 		try: 
 			self.auth = OAuthHandler(consumer_key, consumer_secret) 
 			self.auth.set_access_token(access_token, access_token_secret) 
-			self.api = tweepy.API(self.auth) 
+			self.api = tweepy.API(self.auth)
+			self.gmaps = googlemaps.Client(key=google_key)
+ 
 		except: 
 			print("Error: Authentication Failed")
 
@@ -32,8 +35,6 @@ class TwitterClient:
 				return self.parse_tweet_text(fetched_tweets)
 			except:
 				raise ValueError("wrong username")	
-	def get_geo_tweets(self, query, count = 50):
-		pass	
 
 	def get_viral_tweets(self, query, count = 50):
 		try:

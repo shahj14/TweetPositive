@@ -27,13 +27,7 @@ class TrendTweets(Resource):
 			"tweets": tweets
 		}		
 
-class GeoTweets(Resource):
-	def get(self, search):
-		return {"feature": "coming soon"}
-
-
 api.add_resource(UserTweets, '/user/<string:search>')
-api.add_resource(GeoTweets, '/geo/<string:search>')
 api.add_resource(TrendTweets, '/trend/<string:search>')
 
 if __name__ == '__main__':
