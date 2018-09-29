@@ -32,11 +32,20 @@ class TwitterClient:
 				return self.parse_tweet_text(fetched_tweets)
 			except:
 				raise ValueError("wrong username")	
-	def get_geo_tweets():
+	def get_geo_tweets(self, query, count = 50):
 		pass	
 
-	def viral_scores():
-		pass
+	def get_viral_tweets(self, query, count = 50):
+		try:
+			fetched_tweets = self.api.search(q = query, count = count, result_type='popular')
+			return self.parse_tweet_text(fetched_tweets)
+		except tweepy.TweepError:
+			try: 
+				# print error (if any) 
+				fetched_tweets = self.api.search(q = query, count = count, result_type='popular')
+				return self.parse_tweet_text(fetched_tweets)
+			except:
+				raise ValueError("bad search")
 
 	def parse_tweet_text(self, tweetArr):
 		tweets = []

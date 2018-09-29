@@ -19,7 +19,13 @@ class UserTweets(Resource):
 
 class TrendTweets(Resource):
 	def get(self, search):
-		return {"feature": "coming soon"}
+		tweets = twitterApi.get_viral_tweets(search)
+		return {
+			"score" : sum([tweet['sentiment'] for tweet in tweets]),
+			"happy_tweets": sum([1 for i in tweets if i['sentiment'] > 0]),
+			"sad_tweets": sum([1 for i in tweets if i['sentiment'] < 0]),
+			"tweets": tweets
+		}		
 
 class GeoTweets(Resource):
 	def get(self, search):
