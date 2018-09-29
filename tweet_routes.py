@@ -7,9 +7,9 @@ api = Api(app)
 
 twitterApi = TwitterClient()
 
-class Tweets(Resource):
+class UserTweets(Resource):
 	def get(self, search):
-		tweets = twitterApi.get_tweets(search)
+		tweets = twitterApi.get_user_tweets(search)
 		return {
 			"score" : sum([tweet['sentiment'] for tweet in tweets]),
 			"happy_tweets": sum([1 for i in tweets if i['sentiment'] > 0]),
@@ -17,7 +17,18 @@ class Tweets(Resource):
 			"tweets": tweets
 		}
 
-api.add_resource(Tweets, '/user/<string:search>')
+class TrendTweets(Resource):
+	def get(self, search):
+		return {"feature": "coming soon"}
+
+class GeoTweets(Resource):
+	def get(self, search):
+		return {"feature": "coming soon"}
+
+
+api.add_resource(UserTweets, '/user/<string:search>')
+api.add_resource(GeoTweets, '/geo/<string:search>')
+api.add_resource(TrendTweets, '/trend/<string:search>')
 
 if __name__ == '__main__':
 	app.run(debug=True)
