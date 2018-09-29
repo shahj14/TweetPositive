@@ -1,11 +1,17 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import Resource, Api
 from analysis import TwitterClient
+import requests
 
 app = Flask(__name__)
 api = Api(app)
 
 twitterApi = TwitterClient()
+
+@app.route('/')
+def index():
+	r = requests.get('http://localhost:5000/user/jeetshahuc')
+	return render_template('index.html', tweets=r.json())
 
 class UserTweets(Resource):
 	def get(self, search):

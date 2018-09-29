@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>Twitter Positivity</title>
+    </head>
+    <body>
+    	<h3>Score: {{tweets.score}}</h3>
+        <h3>Happy: {{tweets.happy_tweets}}</h3>
+        <h3>Sad: {{tweets.sad_tweets}}</h3>
+
+        {% for i in tweets.tweets %}
+        <p>{{i.text}}</p>
+        {% endfor %}
+    </body>
+</html>
