@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_restful import Resource, Api
 from analysis import TwitterClient
 import requests
@@ -8,16 +8,19 @@ api = Api(app)
 
 twitterApi = TwitterClient()
 
-@app.route('/')
+@app.route('/', methods = ['POST', 'GET'])
 def index():
-	r = requests.get('http://localhost:5000/user/jeetshahuc')
-	return render_template('index.html', tweets=r.json())
+	if request.method == 'POST':
+		r = requests.get('http://localhost:5000/user/'+request.form['search'])
+		return render_template('index.html', tweets=r.json())
+	return render_template('index.html')	
+
 
 class UserTweets(Resource):
 	def get(self, search):
 		tweets = twitterApi.get_user_tweets(search)
 		return {
-			"score" : sum([tweet['sentiment'] for tweet in tweets]),
+			"score" : round(sum([tweet['sentiment'] for tweet in tweets]),2),
 			"happy_tweets": sum([1 for i in tweets if i['sentiment'] > 0]),
 			"sad_tweets": sum([1 for i in tweets if i['sentiment'] < 0]),
 			"tweets": tweets
@@ -27,7 +30,7 @@ class TrendTweets(Resource):
 	def get(self, search):
 		tweets = twitterApi.get_viral_tweets(search)
 		return {
-			"score" : sum([tweet['sentiment'] for tweet in tweets]),
+			"score" : round(sum([tweet['sentiment'] for tweet in tweets]),2),
 			"happy_tweets": sum([1 for i in tweets if i['sentiment'] > 0]),
 			"sad_tweets": sum([1 for i in tweets if i['sentiment'] < 0]),
 			"tweets": tweets

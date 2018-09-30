@@ -1,0 +1,41 @@
+
+body{
+	background-color: #eee;
+}
+
+.container{
+	margin-top: 0;
+	padding-top: 20px;
+	border-radius: 6px;
+}
+
+.search-form{
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+	width: 60%;
+}
+
+#search{
+    border-radius: 5px;
+    padding: 10px;
+	flex: 5;
+}
+
+button{
+	flex: 1;
+	margin-left: 20px;
+}
+
+.score-group{
+	display: flex;
+	justify-content: center;
+}
+
+.score{
+	padding: 10px;
+}
+
+.tweets{
+	margin-left: 100px;
+}
